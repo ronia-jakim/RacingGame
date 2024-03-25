@@ -9,10 +9,19 @@ public class CheckPointController : MonoBehaviour
     int pointCount;
     public int nextPoint;
 
+    public GameObject lastPoint;
+
     void Start()
     {
         GameObject[] checkpoints = GameObject.FindGameObjectsWithTag("CheckPoint");
         pointCount = checkpoints.Length;
+
+        for (int i = 0; i < pointCount; i++) {
+            if (checkpoints[i].name == "0") {
+                lastPoint = checkpoints[i];
+                break;
+            }
+        }
     }
 
     void Update()
@@ -26,12 +35,13 @@ public class CheckPointController : MonoBehaviour
 
             if (thisPoint == nextPoint) {
                 checkPoints = thisPoint;
+                lastPoint = other.gameObject;
 
                 if (checkPoints == 0) {
                     laps++;
                     Debug.Log("Lap: " + laps);
                 }
-
+                Debug.Log(this.name + pointCount);
                 nextPoint = (nextPoint + 1) % pointCount;
             }
         }

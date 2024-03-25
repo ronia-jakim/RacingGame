@@ -15,6 +15,7 @@ public class SupportDriveScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        lastTimeChecked = Time.time;
     }
 
     private void TurnBackCar() {
@@ -28,7 +29,7 @@ public class SupportDriveScript : MonoBehaviour
             lastTimeChecked = Time.time;
         }
 
-        if (Time.time > lastTimeChecked + 3) TurnBackCar();
+        if (Time.time > lastTimeChecked + 15) TurnBackCar();
     }
 
     void FixedUpdate() {

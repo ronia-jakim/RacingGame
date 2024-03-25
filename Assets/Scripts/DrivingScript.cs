@@ -11,7 +11,7 @@ public class DrivingScript : MonoBehaviour
     private float maxBrakeTorque = 500;
     private float maxSpeed = 250;
 
-    private Rigidbody rb;
+    public Rigidbody rb;
 
     private float currentSpeed;
     public GameObject BackLights;
@@ -23,9 +23,11 @@ public class DrivingScript : MonoBehaviour
     public int numGears = 5;
     public float gearLength = 5;
 
+    public GameObject cameraTarget;
+
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
     }
 
     public void Drive (float accel, float brake, float steer) {

@@ -6,15 +6,12 @@ using UnityEngine.UI;
 
 using Photon.Realtime;
 using Photon.Pun;
-using UnityEngine.Pool;
 
-public class RaceController : MonoBehaviourPunCallbacks
+public class RaceController_2 : MonoBehaviourPunCallbacks
 {
     public static bool racing = false;
     public static int totalLaps = 1;
     public int timer = 3;
-
-    public Text ROOM_NR;
 
     public GameObject startRace;
     public GameObject waitingText;
@@ -31,12 +28,6 @@ public class RaceController : MonoBehaviourPunCallbacks
     public GameObject carPrefab;
     public Transform[] spawnPoints;
     public int playerCount;
-
-    public RawImage mirror;
-
-    public void SetMirror(Camera backCamera) {
-        mirror.texture = backCamera.targetTexture;
-    }
 
     [PunRPC]
     public void StartGame () {
@@ -63,7 +54,7 @@ public class RaceController : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
     }
     void Update() {
-        ROOM_NR.text = PhotonNetwork.CurrentRoom.Name;
+        //Debug.Log(PhotonNetwork.IsConnected);
     }
     void Start()
     {
@@ -84,15 +75,8 @@ public class RaceController : MonoBehaviourPunCallbacks
             startPos = spawnPoints[PhotonNetwork.CurrentRoom.PlayerCount - 1].position;
             startRot = spawnPoints[PhotonNetwork.CurrentRoom.PlayerCount - 1].rotation;
 
-            object[] instanceData = new object[4]; 
-            instanceData[0] = (string)PlayerPrefs.GetString("PlayerName");
-            instanceData[1] = PlayerPrefs.GetInt("Red");
-            instanceData[2] = PlayerPrefs.GetInt("Green");
-            instanceData[3] = PlayerPrefs.GetInt("Blue");
-
             if (OnlinePlayer.LocalPlayerInstance == null) {
-                playerCar = PhotonNetwork.Instantiate(carPrefab.name, startPos, startRot, 0, instanceData);
-                playerCar.GetComponent<CarApperance>().SetLocalPlayer();
+                playerCar = PhotonNetwork.Instantiate(carPrefab.name, startPos, startRot, 0);
             }
 
             if (PhotonNetwork.IsMasterClient) {
